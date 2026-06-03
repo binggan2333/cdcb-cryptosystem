@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define CDCB_K4M16_KEY_LEN 32
 #define CDCB_SAFE_KID_BITS 16
@@ -63,11 +64,11 @@ uint8_t cdcb_decrypt_nibble(const uint16_t cipher, void *k);
  * @param key 结构体
  * @return 0=成功，1=失败
  */
-uint8_t cdcb_encrypt(const uint8_t *plaintext,
+uint8_t cdcb_encrypt(void *key, 
+                    const uint8_t *plaintext,
                     const uint32_t plain_len,
                     uint8_t *ciphertext,
-                    uint32_t *cipher_len,
-                    void *key);
+                    uint32_t *cipher_len);
 
 /**
  * @brief 整字节批量解密
@@ -78,11 +79,11 @@ uint8_t cdcb_encrypt(const uint8_t *plaintext,
  * @param key 结构体
  * @return 0=成功，1=失败
  */
-uint8_t cdcb_decrypt(const uint8_t *ciphertext,
-                    const uint32_t cipher_len,
+uint8_t cdcb_decrypt(void *key,
                     uint8_t *plaintext,
                     uint32_t *plain_len,
-                    void *key);
+                    const uint8_t *ciphertext,
+                    const uint32_t cipher_len);
 
 // 外部依赖函数（需自行实现）
 uint16_t CDCB_kid_rotate(uint16_t base, uint8_t offset);

@@ -172,11 +172,11 @@ uint8_t cdcb_decrypt_nibble(const uint16_t cipher,void *k)
 // ==============================
 // 整字节加密
 // ==============================
-uint8_t cdcb_encrypt(const uint8_t *plaintext,
+uint8_t cdcb_encrypt(void *key, 
+                    const uint8_t *plaintext,
                     const uint32_t plain_len,
                     uint8_t *ciphertext,
-                    uint32_t *cipher_len,
-                    void *key)
+                    uint32_t *cipher_len)
 {
     if (!plaintext || !ciphertext || !cipher_len || !key) return 0x01;
     for(uint32_t i=0;i<plain_len;i++)
@@ -196,11 +196,11 @@ uint8_t cdcb_encrypt(const uint8_t *plaintext,
 // ==============================
 // 整字节解密
 // ==============================
-uint8_t cdcb_decrypt(const uint8_t *ciphertext,
-                    const uint32_t cipher_len,
+uint8_t cdcb_decrypt(void *key,
                     uint8_t *plaintext,
                     uint32_t *plain_len,
-                    void *key)
+                    const uint8_t *ciphertext,
+                    const uint32_t cipher_len)
 {
     if (!ciphertext || !plaintext || !plain_len || !key || cipher_len % 4 != 0) return 0x01;
     for(uint32_t i=0;i<cipher_len/4;i++)
