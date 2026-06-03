@@ -40,7 +40,7 @@ int main()
 
     // 3. 加密
     printf("原始明文: %s\n", plain_buf);
-    uint8_t enc_ret = cdcb_encrypt(plain_buf, 16, cipher_buf, &cipher_len, &key_ctx);
+    uint8_t enc_ret = cdcb_encrypt(&key_ctx, plain_buf, 16, cipher_buf, &cipher_len);
     if(enc_ret != 0) {
         printf("加密失败\n");
         return -1;
@@ -48,7 +48,7 @@ int main()
     printf("加密成功，密文长度: %d\n", cipher_len);
 
     // 4. 解密
-    uint8_t dec_ret = cdcb_decrypt(cipher_buf, cipher_len, dec_buf, &dec_len, &key_ctx);
+    uint8_t dec_ret = cdcb_decrypt(&key_ctx, dec_buf, &dec_len, cipher_buf, cipher_len);
     if(dec_ret != 0) {
         printf("解密失败\n");
         return -1;
